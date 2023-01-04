@@ -6,15 +6,48 @@ import {
   Route,
   useParams,
 } from "react-router-dom";
+//import {getAllUsers} from './services/UserService'
+import { useState, useEffect } from 'react'
+
 
 function Home() {
   return <h3>Home Page </h3>;
 }
 
 function Verification() {
-  let { id } = useParams();
-  return <div style={{ fontSize: "50px" }}>
-           Verifying credentials for {id}
+
+  //const [roles, setRoles] = useState([]);
+  const [error, setError] = useState(null);
+  let { emailId } = useParams();
+
+  useEffect(() => {
+       fetch("https://jsonplaceholder.typicode.com/users")
+         .then((response) => response.json())
+         .then((response) => {
+           console.log(response);
+           setError(null);
+         })
+         .catch(setError);
+  }, []);
+
+  if (error) return <p>An error occurred</p>
+
+//  return (
+//      <div style={{ fontSize: "50px" }}>
+//      Verifying credentials for {emailId}
+////       {roles.map(({ id, name, email, company }) => (
+////         <Contact
+////           key={id}
+////           name={name}
+////           email={email}
+////           tagline={company.catchPhrase}
+////         />
+////       ))}
+//     </div>
+//  );
+
+  return <div style={{ fontSize: "20px" }}>
+           Verifying credentials for {emailId}
          </div>;
 }
 
@@ -23,7 +56,7 @@ function App() {
   return (
     <Router>
      <Routes>
-       <Route path="/validation/:id" element={<Verification/>}>
+       <Route path="/validation/:emailId" element={<Verification/>}>
        </Route>
        <Route path="/" element={<Home/>}>
        </Route>
