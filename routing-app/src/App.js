@@ -20,17 +20,26 @@ function Verification() {
   const [error, setError] = useState(null);
   let { emailId } = useParams();
 
-  useEffect(() => {
-       fetch("https://jsonplaceholder.typicode.com/users")
-         .then((response) => response.json())
-         .then((response) => {
-           console.log(response);
-           setError(null);
-         })
-         .catch(setError);
-  }, []);
+  //validation
+  if(emailId != "shailendra@google.com") {
 
-  if (error) return <p>An error occurred</p>
+      return <div style={{ fontSize: "20px" }}>
+            This user ({emailId}) does not have access to app. Please raise a request.
+            </div>;
+  }else
+  return <p>Welcome!</p>
+
+//  useEffect(() => {
+//       fetch("https://jsonplaceholder.typicode.com/users")
+//         .then((response) => response.json())
+//         .then((response) => {
+//           console.log(response);
+//           setError(null);
+//         })
+//         .catch(setError);
+//  }, []);
+//
+//  if (error) return <p>An error occurred</p>
 
 //  return (
 //      <div style={{ fontSize: "50px" }}>
@@ -46,9 +55,6 @@ function Verification() {
 //     </div>
 //  );
 
-  return <div style={{ fontSize: "20px" }}>
-           Verifying credentials for {emailId}
-         </div>;
 }
 
 
